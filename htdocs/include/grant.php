@@ -11,7 +11,7 @@ if(!isGrantId($id))
 }
 else
 {
-  $GRANT = DBConnection::getInstance()->getGrantById($id)   ; 
+  $GRANT = DBConnection::getInstance()->getGrantById($id); 
 }
 
 $ref = "$masterPath?g=$id";
@@ -86,7 +86,7 @@ function useGrant($upload, $GRANT, $DATA)
       }
       else
       {
-          DBConnection::getInstance()->updateGrantUsage(time(),1);
+          DBConnection::getInstance()->updateGrantUsage($GRANT['id'],time(),1);
       }
       DBConnection::getInstance()->commit();
   }
