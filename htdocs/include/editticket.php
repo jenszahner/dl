@@ -29,7 +29,7 @@ function handleUpdate($DATA, $params)
   if(isset($params['pass_send']) && $params['pass_send'])
     $values['pass_send'] = true;
   else
-    $values['pass_send'] = 0false;
+    $values['pass_send'] = false;
 
   if(isset($params['ticket_permanent']) && $params['ticket_permanent'])
   {

@@ -56,7 +56,7 @@ function useGrant($upload, $GRANT, $DATA)
 
   // start Transaction
   try {
-      DBConnection::getInstance()->beginTansaction();
+      DBConnection::getInstance()->beginTransaction();
       $success = DBConnection::getInstance()->generateTicket($upload['id'], 
                                                               $GRANT['user_id'], 
                                                               $upload["name"],
