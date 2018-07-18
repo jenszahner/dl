@@ -9,6 +9,8 @@ final class DBConnection {
     protected $conn;
     protected $queries;
     
+    const CONFIG_HASHED_SPOOL_DIRECTORY = "hash_spool_directory";
+    
     /**
      * 
      * @return DBConnection
@@ -18,6 +20,15 @@ final class DBConnection {
             static::$instance = new static;
         }
         return static::$instance;
+    }
+    
+    public function getConfigValue($name) {
+        return $this->conn->createQueryBuilder()->select('value')
+                                                    ->from('config')
+                                                    ->where('name = ?')
+                                                    ->setParameter(0,$name)
+                                                    ->execute()
+                                                    ->fetchColumn();
     }
     
     /**

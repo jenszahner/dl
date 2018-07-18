@@ -53,6 +53,26 @@ function runGc()
   }
 }
 
+function hashDirectory($id) {
+    global $dataDir;
+    
+    $hashMode = (int) DBConnection::getInstance()->getConfigValue(DBConnection::CONFIG_HASHED_SPOOL_DIRECTORY);
+    if (($hashMode < 0)||($hashMode > 8)) {
+        throw new \Exception("invalid hash mode given");
+    }
+    if ($hashMode==0) {
+        return  $dataDir;
+    }
+    $folder = "";
+    for($i=0;$i < $hashMode;$i++) {
+        $folder .= substr($id,2*$i,2)."/";
+    }
+    if (!@mkdir($dataDir."/".$folder,0777,true)) {
+        throw new \Exception("Cannot create directory" .$dataDir."/".$folder);
+    }
+    return $dataDir."/".$folder;
+}
+
 
 function genTicketId()
 {
@@ -62,7 +82,7 @@ function genTicketId()
   do
   {
     $id = randomToken();
-    $tmpFile = "$dataDir/$id";
+    $tmpFile = hashDirectory($id). "/" . $id;
   }
   while(@fopen($tmpFile, "x") === FALSE && --$tries);
   if(!$tries)
