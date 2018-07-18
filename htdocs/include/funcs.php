@@ -573,7 +573,6 @@ function withUpload($FILES, $func, $params)
 {
   $ret = false;
   $upload = handleUpload($FILES);
-  reconnectDB();
   if($upload !== false)
   {
     $ret = call_user_func_array($func, array_merge(array($upload), $params));
